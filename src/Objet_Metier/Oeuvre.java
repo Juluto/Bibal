@@ -9,13 +9,17 @@ public class Oeuvre implements Serializable {
 
     @Id
     private String titre;
-    private int editeur;
+    private String editeur;
     private int nombreExemplaire;
 
-    public Oeuvre(String titre, int editeur, int nombreExemplaire) {
+    public Oeuvre(String titre, String editeur, int nombreExemplaire) {
         this.titre = titre;
         this.editeur = editeur;
         this.nombreExemplaire = nombreExemplaire;
+    }
+    
+    public Oeuvre() {
+        super();
     }
 
     /**

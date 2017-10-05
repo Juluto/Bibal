@@ -3,6 +3,9 @@
     <persistence-unit name="BIBAL" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>Objet_Metier.Usager</class>
+        <class>Objet_Metier.Oeuvre</class>
+        <class>Objet_Metier.Livre</class>
+        <class>Objet_Metier.Magazine</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bibal"/>
             <property name="javax.persistence.jdbc.user" value="root"/>

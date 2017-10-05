@@ -8,11 +8,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import Main.Main;
+import Objet_Metier.Livre;
+import Objet_Metier.Magazine;
 import Objet_Metier.Usager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -21,32 +24,6 @@ import javafx.scene.text.Text;
 
 public class FrontOffice implements Initializable {
 
-	@FXML
-	private Pane paneGererExemplaireOeuvre;
-	@FXML
-	private Button ajouterExemplaire;
-	@FXML
-	private Button supprimerExemplaire;
-	@FXML
-	private Button modifierExemplaire;
-	@FXML
-	private Button ajouterOeuvre;
-	@FXML
-	private Button supprimerOeuvre;
-	@FXML
-	private Button retourExemplaireOeuvre;
-	@FXML
-	private Pane paneEmpruntReservation;
-	@FXML
-	private Button retourEmpruntReservation;
-	@FXML
-	private Button reserverOeuvre;
-	@FXML
-	private Button annulerReservation;
-	@FXML
-	private Button emprunterExemplaire;
-	@FXML
-	private Button rendreExemplaire;
 	@FXML
 	private Pane paneAjouterUsager;
 	@FXML
@@ -65,16 +42,6 @@ public class FrontOffice implements Initializable {
 	private Button retourAjouterUsager;
 	@FXML
 	private Text ajoutUsagerWait;
-	@FXML
-	private Pane paneMenu;
-	@FXML
-	private Button gestionUsager;
-	@FXML
-	private Button gererExemplaireOeuvre;
-	@FXML
-	private Button gererEmpruntReservation;
-	@FXML
-	private Button quitter;
 	@FXML
 	private Pane paneGestionUsager;
 	@FXML
@@ -117,6 +84,80 @@ public class FrontOffice implements Initializable {
 	private Button confirmerModifierUsager;
 	@FXML
 	private Button retourModifierUsager;
+	@FXML
+	private Pane paneEmpruntReservation;
+	@FXML
+	private Button retourEmpruntReservation;
+	@FXML
+	private Button reserverOeuvre;
+	@FXML
+	private Button annulerReservation;
+	@FXML
+	private Button emprunterExemplaire;
+	@FXML
+	private Button rendreExemplaire;
+	@FXML
+	private Pane paneMenu;
+	@FXML
+	private Button gestionUsager;
+	@FXML
+	private Button gererExemplaireOeuvre;
+	@FXML
+	private Button gererEmpruntReservation;
+	@FXML
+	private Button quitter;
+	@FXML
+	private Pane paneGererExemplaireOeuvre;
+	@FXML
+	private Button ajouterExemplaire;
+	@FXML
+	private Button supprimerExemplaire;
+	@FXML
+	private Button modifierExemplaire;
+	@FXML
+	private Button ajouterOeuvre;
+	@FXML
+	private Button supprimerOeuvre;
+	@FXML
+	private Button retourExemplaireOeuvre;
+	@FXML
+	private Pane paneSupprimerOeuvre;
+	@FXML
+	private ComboBox<String> typeSupprimerOeuvre;
+	@FXML
+	private TextField titreSupprimerOeuvre;
+	@FXML
+	private Button confirmSupprimerOeuvre;
+	@FXML
+	private Button retourSupprimerOeuvre;
+	@FXML
+	private Label labelSupprimerOeuvre;
+	@FXML
+	private Pane paneAjouterOeuvre;
+	@FXML
+	private ComboBox<String> typeAjouterOeuvre;
+	@FXML
+	private Text textAuteurAjouterOeuvre;
+	@FXML
+	private Text textNumeroAjouterOeuvre;
+	@FXML
+	private Text textDateAjouterOeuvre;
+	@FXML
+	private TextField titreAjouterOeuvre;
+	@FXML
+	private TextField editeurAjouterOeuvre;
+	@FXML
+	private TextField auteurAjouterOeuvre;
+	@FXML
+	private TextField numeroAjouterOeuvre;
+	@FXML
+	private TextField dateAjouterOeuvre;
+	@FXML
+	private Button retourAjouterOeuvre;
+	@FXML
+	private Button confirmAjouterOeuvre;
+	@FXML
+	private Label labelAjouterOeuvre;
 
 	public void setMain(Main main) {
 
@@ -131,7 +172,13 @@ public class FrontOffice implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// TODO
+		typeAjouterOeuvre.getItems().removeAll(typeAjouterOeuvre.getItems());
+		typeAjouterOeuvre.getItems().addAll("Livre", "Magazine");
+		typeAjouterOeuvre.getSelectionModel().select("Livre");
+		
+		typeSupprimerOeuvre.getItems().removeAll(typeSupprimerOeuvre.getItems());
+		typeSupprimerOeuvre.getItems().addAll("Livre", "Magazine");
+		typeSupprimerOeuvre.getSelectionModel().select("Livre");
 	}
 
 	@FXML
@@ -167,6 +214,16 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private void setFrontPaneModifierUsager(ActionEvent event) {
 		paneModifierUsager.toFront();
+	}
+
+	@FXML
+	private void setFrontPaneAjouterOeuvre(ActionEvent event) {
+		paneAjouterOeuvre.toFront();
+	}
+
+	@FXML
+	private void setFrontPaneSupprimerOeuvre(ActionEvent event) {
+		paneSupprimerOeuvre.toFront();
 	}
 
 	@FXML
@@ -213,7 +270,7 @@ public class FrontOffice implements Initializable {
 		labelSupprimerUsager.setText(null);
 		labelSupprimerUsager.setTextFill(Color.BLACK);
 
-		//Field Modifier usager
+		// Field Modifier usager
 		modifierPrenomUsager.setDisable(true);
 		modifierPrenomUsager.setText(null);
 		modifierMailUsager.setDisable(true);
@@ -228,7 +285,7 @@ public class FrontOffice implements Initializable {
 		fieldModifierNomUsager.setText(null);
 		labelModifierUsager.setText(null);
 		labelModifierUsager.setTextFill(Color.BLACK);
-		
+
 		paneGestionUsager.toFront();
 	}
 
@@ -249,6 +306,8 @@ public class FrontOffice implements Initializable {
 			labelSupprimerUsager.setText("Cet usager n'existe pas !");
 			labelSupprimerUsager.setTextFill(Color.RED);
 		}
+		em.close();
+		emf.close();
 	}
 
 	@FXML
@@ -275,6 +334,8 @@ public class FrontOffice implements Initializable {
 			labelModifierUsager.setText("Cet usager n'existe pas !");
 			labelModifierUsager.setTextFill(Color.RED);
 		}
+		em.close();
+		emf.close();
 	}
 
 	@FXML
@@ -304,7 +365,7 @@ public class FrontOffice implements Initializable {
 		usager.setTelephone(modifierTelUsager.getText());
 		usager.setAdresse(modifierAdresseUsager.getText());
 		em.getTransaction().commit();
-		
+
 		modifierPrenomUsager.setDisable(true);
 		modifierPrenomUsager.setText(null);
 		modifierMailUsager.setDisable(true);
@@ -318,6 +379,105 @@ public class FrontOffice implements Initializable {
 		rechercherUsager.setDisable(false);
 		labelModifierUsager.setText("Usager modifier");
 		labelModifierUsager.setTextFill(Color.BLACK);
+		em.close();
+		emf.close();
+	}
+	
+	@FXML
+	public void typeAjouterOeuvre(ActionEvent event) {
+		String choix = typeAjouterOeuvre.getSelectionModel().getSelectedItem();
+		switch (choix)
+		{
+		case "Livre":
+			textNumeroAjouterOeuvre.setVisible(false);
+			numeroAjouterOeuvre.setVisible(false);
+			numeroAjouterOeuvre.setText(null);
+			textDateAjouterOeuvre.setVisible(false);
+			dateAjouterOeuvre.setVisible(false);
+			dateAjouterOeuvre.setText(null);
+			textAuteurAjouterOeuvre.setVisible(true);
+			auteurAjouterOeuvre.setVisible(true);
+			break;
+		case "Magazine":
+			textAuteurAjouterOeuvre.setVisible(false);
+			auteurAjouterOeuvre.setVisible(false);
+			auteurAjouterOeuvre.setText(null);
+			textNumeroAjouterOeuvre.setVisible(true);
+			numeroAjouterOeuvre.setVisible(true);
+			textDateAjouterOeuvre.setVisible(true);
+			dateAjouterOeuvre.setVisible(true);
+			break;
+		}
+	}
+	
+	@FXML
+	public void retourExemplaireOeuvre(ActionEvent event) {
+		//Field ajouter oeuvre
+		textNumeroAjouterOeuvre.setVisible(false);
+		numeroAjouterOeuvre.setVisible(false);
+		numeroAjouterOeuvre.setText(null);
+		textDateAjouterOeuvre.setVisible(false);
+		dateAjouterOeuvre.setVisible(false);
+		dateAjouterOeuvre.setText(null);
+		textAuteurAjouterOeuvre.setVisible(true);
+		auteurAjouterOeuvre.setVisible(true);
+		auteurAjouterOeuvre.setText(null);
+		editeurAjouterOeuvre.setText(null);
+		titreAjouterOeuvre.setText(null);
+		typeAjouterOeuvre.getSelectionModel().select("Livre");
+		
+	}
+
+	@FXML
+	public void ajouterOeuvre(ActionEvent event) {
+		String choix = typeAjouterOeuvre.getSelectionModel().getSelectedItem();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		switch (choix)
+		{
+		case "Livre":
+			Livre newLivre = new Livre(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0, auteurAjouterOeuvre.getText());
+			em.persist(newLivre);
+			em.getTransaction().commit();
+			break;
+		case "Magazine":
+			Magazine newMagazine = new Magazine(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0, numeroAjouterOeuvre.getText(), dateAjouterOeuvre.getText());
+			em.persist(newMagazine);
+			em.getTransaction().commit();
+			break;
+		}
+		em.close();
+		emf.close();
+	}
+
+	@FXML
+	public void supprimerOeuvre(ActionEvent event) {
+		String choix = typeSupprimerOeuvre.getSelectionModel().getSelectedItem();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		switch (choix)
+		{
+		case "Livre":
+			Livre livre = em.find(Livre.class, titreSupprimerOeuvre.getText());
+			em.remove(livre);
+			em.getTransaction().commit();
+			labelSupprimerOeuvre.setText("Livre supprimer");
+			labelSupprimerOeuvre.setTextFill(Color.BLACK);
+			titreSupprimerOeuvre.setText(null);
+			break;
+		case "Magazine":
+			Magazine magazine = em.find(Magazine.class, titreSupprimerOeuvre.getText());
+			em.remove(magazine);
+			em.getTransaction().commit();
+			labelSupprimerOeuvre.setText("Magazine supprimer");
+			labelSupprimerOeuvre.setTextFill(Color.BLACK);
+			titreSupprimerOeuvre.setText(null);
+			break;
+		}
+		em.close();
+		emf.close();
 	}
 
 	/**

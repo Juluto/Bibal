@@ -15,6 +15,10 @@ public class Exemplaire implements Serializable {
         this.Etat = Etat;
     }
     
+    public Exemplaire() {
+    	super();
+    }
+    
     public void mettreAJour() {
         // TODO - implement Exemplaire.mettreAJour
         throw new UnsupportedOperationException();
