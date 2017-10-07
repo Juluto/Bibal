@@ -8,8 +8,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import Main.Main;
+import Objet_Metier.Exemplaire;
 import Objet_Metier.Livre;
 import Objet_Metier.Magazine;
+import Objet_Metier.Oeuvre;
 import Objet_Metier.Usager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,32 +109,6 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private Button quitter;
 	@FXML
-	private Pane paneGererExemplaireOeuvre;
-	@FXML
-	private Button ajouterExemplaire;
-	@FXML
-	private Button supprimerExemplaire;
-	@FXML
-	private Button modifierExemplaire;
-	@FXML
-	private Button ajouterOeuvre;
-	@FXML
-	private Button supprimerOeuvre;
-	@FXML
-	private Button retourExemplaireOeuvre;
-	@FXML
-	private Pane paneSupprimerOeuvre;
-	@FXML
-	private ComboBox<String> typeSupprimerOeuvre;
-	@FXML
-	private TextField titreSupprimerOeuvre;
-	@FXML
-	private Button confirmSupprimerOeuvre;
-	@FXML
-	private Button retourSupprimerOeuvre;
-	@FXML
-	private Label labelSupprimerOeuvre;
-	@FXML
 	private Pane paneAjouterOeuvre;
 	@FXML
 	private ComboBox<String> typeAjouterOeuvre;
@@ -158,6 +134,72 @@ public class FrontOffice implements Initializable {
 	private Button confirmAjouterOeuvre;
 	@FXML
 	private Label labelAjouterOeuvre;
+	@FXML
+	private Pane paneSupprimerOeuvre;
+	@FXML
+	private ComboBox<String> typeSupprimerOeuvre;
+	@FXML
+	private TextField titreSupprimerOeuvre;
+	@FXML
+	private Button confirmSupprimerOeuvre;
+	@FXML
+	private Button retourSupprimerOeuvre;
+	@FXML
+	private Label labelSupprimerOeuvre;
+	@FXML
+	private Pane paneAjouterExemplaire;
+	@FXML
+	private TextField titreAjouterExemplaire;
+	@FXML
+	private TextField quantiteAjouterExemplaire;
+	@FXML
+	private Button verifierAjouterExemplaire;
+	@FXML
+	private Button modifierAjouterExemplaire;
+	@FXML
+	private Button validerAjouterExemplaire;
+	@FXML
+	private Button retourAjouterExemplaire;
+	@FXML
+	private Label labelAjouterExemplaire;
+	@FXML
+	private Label labelValiderAjouterExemplaire;
+	@FXML
+	private Pane paneSupprimerExemplaire;
+	@FXML
+	private TextField numeroSupprimerExemplaire;
+	@FXML
+	private Button validerSupprimerExemplaire;
+	@FXML
+	private Button retourSupprimerExemplaire;
+	@FXML
+	private Label labelSupprimerExemplaire;
+	@FXML
+	private Pane paneGererExemplaireOeuvre;
+	@FXML
+	private Button ajouterExemplaire;
+	@FXML
+	private Button supprimerExemplaire;
+	@FXML
+	private Button modifierExemplaire;
+	@FXML
+	private Button ajouterOeuvre;
+	@FXML
+	private Button supprimerOeuvre;
+	@FXML
+	private Button retourExemplaireOeuvre;
+	@FXML
+	private Pane paneModifierExemplaire;
+	@FXML
+	private TextField numeroModifierExemplaire;
+	@FXML
+	private ComboBox<String> etatModifierExemplaire;
+	@FXML
+	private Button validerModifierExemplaire;
+	@FXML
+	private Button retourExemplaire;
+	@FXML
+	private Label labelModifierExemplaire;
 
 	public void setMain(Main main) {
 
@@ -179,6 +221,10 @@ public class FrontOffice implements Initializable {
 		typeSupprimerOeuvre.getItems().removeAll(typeSupprimerOeuvre.getItems());
 		typeSupprimerOeuvre.getItems().addAll("Livre", "Magazine");
 		typeSupprimerOeuvre.getSelectionModel().select("Livre");
+		
+		etatModifierExemplaire.getItems().removeAll(etatModifierExemplaire.getItems());
+		etatModifierExemplaire.getItems().addAll("Disponible", "Emprunte", "En restauration");
+		etatModifierExemplaire.getSelectionModel().select("Disponible");
 	}
 
 	@FXML
@@ -224,6 +270,21 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private void setFrontPaneSupprimerOeuvre(ActionEvent event) {
 		paneSupprimerOeuvre.toFront();
+	}
+	
+	@FXML
+	public void setFrontPaneAjouterExemplaire(ActionEvent event) {
+		paneAjouterExemplaire.toFront();
+	}
+
+	@FXML
+	public void setFrontPaneSupprimerExemplaire(ActionEvent event) {
+		paneSupprimerExemplaire.toFront();
+	}
+
+	@FXML
+	public void setFrontPaneModifierExemplaire(ActionEvent event) {
+		paneModifierExemplaire.toFront();
 	}
 
 	@FXML
@@ -426,11 +487,29 @@ public class FrontOffice implements Initializable {
 		labelAjouterOeuvre.setText(null);
 		labelAjouterOeuvre.setTextFill(Color.BLACK);
 		typeAjouterOeuvre.getSelectionModel().select("Livre");
-		
-		//Field supprimer oeuvre
+
+		// Field supprimer oeuvre
 		titreSupprimerOeuvre.setText(null);
 		labelSupprimerOeuvre.setText(null);
 		labelSupprimerOeuvre.setTextFill(Color.BLACK);
+		
+		//Field ajouter exemplaire
+		titreAjouterExemplaire.setText(null);
+		quantiteAjouterExemplaire.setText(null);
+		titreAjouterExemplaire.setDisable(false);
+		quantiteAjouterExemplaire.setDisable(true);
+		validerAjouterExemplaire.setDisable(true);
+		
+		//Field supprimer exemplaire
+		numeroSupprimerExemplaire.setText(null);
+		labelSupprimerExemplaire.setText(null);
+		
+		//Field modifier exemplaire
+		numeroModifierExemplaire.setText(null);
+		labelModifierExemplaire.setText(null);
+		etatModifierExemplaire.getSelectionModel().select("Disponible");
+		labelModifierExemplaire.setTextFill(Color.BLACK);
+		
 
 		paneGererExemplaireOeuvre.toFront();
 	}
@@ -504,6 +583,92 @@ public class FrontOffice implements Initializable {
 				labelSupprimerOeuvre.setTextFill(Color.RED);
 			}
 			break;
+		}
+		em.close();
+		emf.close();
+	}
+	
+	@FXML
+	public void verifierAjouterExemplaire(ActionEvent event) {
+		Oeuvre oeuvre;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		oeuvre = em.find(Oeuvre.class, titreAjouterExemplaire.getText());
+		if (oeuvre != null) {
+			titreAjouterExemplaire.setDisable(true);
+			quantiteAjouterExemplaire.setDisable(false);
+			validerAjouterExemplaire.setDisable(false);
+			labelAjouterExemplaire.setText(null);
+			labelValiderAjouterExemplaire.setText(null);
+			
+		} else {
+			labelAjouterExemplaire.setText("Cet oeuvre n'existe pas !");
+			labelValiderAjouterExemplaire.setText(null);
+		}
+		em.close();
+		emf.close();
+	}
+
+	@FXML
+	public void modifierAjouterExemplaire(ActionEvent event) {
+		titreAjouterExemplaire.setDisable(false);
+		quantiteAjouterExemplaire.setDisable(true);
+		quantiteAjouterExemplaire.setText(null);
+		validerAjouterExemplaire.setDisable(true);
+	}
+
+	@FXML
+	public void validerAjouterExemplaire(ActionEvent event) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Oeuvre oeuvre = em.find(Oeuvre.class, titreAjouterExemplaire.getText());
+		for (int i=0; i < Integer.parseInt(quantiteAjouterExemplaire.getText()); i++) {
+			em.getTransaction().begin();
+			Exemplaire exemplaire = new Exemplaire(0, "Disponible", oeuvre);
+			em.persist(exemplaire);
+			em.getTransaction().commit();
+		}
+		em.close();
+		emf.close();
+		labelValiderAjouterExemplaire.setText("Exemplaire ajoute");
+	}
+	
+	@FXML
+	public void validerSupprimerExemplaire(ActionEvent event) {
+		Exemplaire exemplaire;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+			exemplaire = em.find(Exemplaire.class, Integer.parseInt(numeroSupprimerExemplaire.getText()));
+			em.remove(exemplaire);
+			em.getTransaction().commit();
+			labelSupprimerExemplaire.setText("Exemplaire supprimer");
+			labelSupprimerExemplaire.setTextFill(Color.BLACK);
+			numeroSupprimerExemplaire.setText(null);
+		} catch (IllegalArgumentException e) {
+			labelSupprimerExemplaire.setText("Cet exemplaire n'existe pas !");
+			labelSupprimerExemplaire.setTextFill(Color.RED);
+		}
+		em.close();
+		emf.close();
+	}
+	
+	@FXML
+	public void validerModifierExemplaire(ActionEvent event) {
+		Exemplaire exemplaire;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+			exemplaire = em.find(Exemplaire.class, Integer.parseInt(numeroModifierExemplaire.getText()));
+			exemplaire.setEtat(etatModifierExemplaire.getSelectionModel().getSelectedItem());
+			em.getTransaction().commit();
+			labelModifierExemplaire.setText("Exemplaire modifie");
+			labelModifierExemplaire.setTextFill(Color.BLACK);
+		} catch (NullPointerException e) {
+			labelSupprimerExemplaire.setText("Cet exemplaire n'existe pas !");
+			labelSupprimerExemplaire.setTextFill(Color.RED);
 		}
 		em.close();
 		emf.close();
