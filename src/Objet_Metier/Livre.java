@@ -1,9 +1,10 @@
 package Objet_Metier;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
+@DiscriminatorValue("LIVRE")
 public class Livre extends Oeuvre {
 
     private String auteur;
