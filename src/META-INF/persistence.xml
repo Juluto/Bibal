@@ -6,6 +6,7 @@
         <class>Objet_Metier.Oeuvre</class>
         <class>Objet_Metier.Livre</class>
         <class>Objet_Metier.Magazine</class>
+        <class>Objet_Metier.Exempalire</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bibal"/>
             <property name="javax.persistence.jdbc.user" value="root"/>

@@ -179,75 +179,6 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="paneGererExemplaireOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
-         <children>
-            <Text layoutX="122.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer exemplaire &amp; oeuvre" underline="true">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Text layoutX="39.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer exemplaire">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Text>
-            <Text layoutX="393.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer oeuvre">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Text>
-            <Button fx:id="ajouterExemplaire" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="198.0" text="Ajouter exemplaire">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="supprimerExemplaire" layoutX="22.0" layoutY="236.0" mnemonicParsing="false" text="Supprimer exemplaire">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="modifierExemplaire" layoutX="23.0" layoutY="298.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="198.0" text="Modifier exemplaire">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="ajouterOeuvre" layoutX="373.0" layoutY="197.0" mnemonicParsing="false" onAction="#setFrontPaneAjouterOeuvre" prefHeight="39.0" prefWidth="166.0" text="Ajouter oeuvre">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="supprimerOeuvre" layoutX="372.0" layoutY="259.0" mnemonicParsing="false" onAction="#setFrontPaneSupprimerOeuvre" text="Supprimer oeuvre">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="retourExemplaireOeuvre" layoutX="265.0" layoutY="337.0" mnemonicParsing="false" onAction="#setFrontPaneMenu" text="Retour">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="paneSupprimerOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
-         <children>
-            <Text layoutX="179.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer Oeuvre">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Text layoutX="137.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" />
-            <ComboBox fx:id="typeSupprimerOeuvre" layoutX="204.0" layoutY="144.0" prefWidth="150.0" />
-            <Text layoutX="138.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre" />
-            <TextField fx:id="titreSupprimerOeuvre" layoutX="205.0" layoutY="196.0" />
-            <Button fx:id="confirmSupprimerOeuvre" layoutX="238.0" layoutY="254.0" mnemonicParsing="false" onAction="#supprimerOeuvre" text="Supprimer" />
-            <Button fx:id="retourSupprimerOeuvre" layoutX="248.0" layoutY="335.0" mnemonicParsing="false" onAction="#retourExemplaireOeuvre" text="Retour" />
-            <Label fx:id="labelSupprimerOeuvre" layoutX="393.0" layoutY="200.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane fx:id="paneAjouterOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
             <Text layoutX="199.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter Oeuvre">
@@ -272,6 +203,141 @@
             <Label fx:id="labelAjouterOeuvre" layoutX="385.0" layoutY="355.0">
                <font>
                   <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneSupprimerOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="179.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer Oeuvre">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="137.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" />
+            <ComboBox fx:id="typeSupprimerOeuvre" layoutX="204.0" layoutY="144.0" prefWidth="150.0" />
+            <Text layoutX="138.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre" />
+            <TextField fx:id="titreSupprimerOeuvre" layoutX="205.0" layoutY="196.0" />
+            <Button fx:id="confirmSupprimerOeuvre" layoutX="238.0" layoutY="254.0" mnemonicParsing="false" onAction="#supprimerOeuvre" text="Supprimer" />
+            <Button fx:id="retourSupprimerOeuvre" layoutX="248.0" layoutY="335.0" mnemonicParsing="false" onAction="#retourExemplaireOeuvre" text="Retour" />
+            <Label fx:id="labelSupprimerOeuvre" layoutX="393.0" layoutY="200.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneAjouterExemplaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="175.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter Exemplaire">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="131.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre de l'oeuvre" />
+            <Text layoutX="135.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité" />
+            <TextField fx:id="titreAjouterExemplaire" layoutX="233.0" layoutY="133.0" />
+            <TextField fx:id="quantiteAjouterExemplaire" disable="true" layoutX="237.0" layoutY="225.0" />
+            <Button fx:id="verifierAjouterExemplaire" layoutX="207.0" layoutY="168.0" mnemonicParsing="false" onAction="#verifierAjouterExemplaire" text="Vérifier" />
+            <Button fx:id="modifierAjouterExemplaire" layoutX="319.0" layoutY="168.0" mnemonicParsing="false" onAction="#modifierAjouterExemplaire" text="Modifier" />
+            <Button fx:id="validerAjouterExemplaire" disable="true" layoutX="293.0" layoutY="311.0" mnemonicParsing="false" onAction="#validerAjouterExemplaire" text="Valider" />
+            <Button fx:id="retourAjouterExemplaire" layoutX="61.0" layoutY="311.0" mnemonicParsing="false" onAction="#retourExemplaireOeuvre" text="Retour" />
+            <Label fx:id="labelAjouterExemplaire" layoutX="411.0" layoutY="110.0" textFill="RED">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelValiderAjouterExemplaire" layoutX="386.0" layoutY="351.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneSupprimerExemplaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="155.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer Exemplaire">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="65.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero Exemplaire" />
+            <TextField fx:id="numeroSupprimerExemplaire" layoutX="219.0" layoutY="162.0" />
+            <Button fx:id="validerSupprimerExemplaire" layoutX="267.0" layoutY="233.0" mnemonicParsing="false" onAction="#validerSupprimerExemplaire" text="Supprimer" />
+            <Button fx:id="retourSupprimerExemplaire" layoutX="65.0" layoutY="289.0" mnemonicParsing="false" onAction="#retourExemplaireOeuvre" text="Retour" />
+            <Label fx:id="labelSupprimerExemplaire" layoutX="229.0" layoutY="314.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneGererExemplaireOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="122.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer exemplaire &amp; oeuvre" underline="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="39.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer exemplaire">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="393.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gérer oeuvre">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Button fx:id="ajouterExemplaire" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#setFrontPaneAjouterExemplaire" prefHeight="39.0" prefWidth="198.0" text="Ajouter exemplaire">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="supprimerExemplaire" layoutX="22.0" layoutY="236.0" mnemonicParsing="false" onAction="#setFrontPaneSupprimerExemplaire" text="Supprimer exemplaire">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="modifierExemplaire" layoutX="23.0" layoutY="298.0" mnemonicParsing="false" onAction="#setFrontPaneModifierExemplaire" prefHeight="39.0" prefWidth="198.0" text="Modifier exemplaire">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="ajouterOeuvre" layoutX="373.0" layoutY="197.0" mnemonicParsing="false" onAction="#setFrontPaneAjouterOeuvre" prefHeight="39.0" prefWidth="166.0" text="Ajouter oeuvre">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="supprimerOeuvre" layoutX="372.0" layoutY="259.0" mnemonicParsing="false" onAction="#setFrontPaneSupprimerOeuvre" text="Supprimer oeuvre">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="retourExemplaireOeuvre" layoutX="265.0" layoutY="337.0" mnemonicParsing="false" onAction="#setFrontPaneMenu" text="Retour">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="paneModifierExemplaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="168.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modifier exemplaire">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text layoutX="63.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero exemplaire" />
+            <TextField fx:id="numeroModifierExemplaire" layoutX="216.0" layoutY="144.0" />
+            <Text layoutX="63.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etat" />
+            <ComboBox fx:id="etatModifierExemplaire" layoutX="215.0" layoutY="188.0" prefWidth="150.0" />
+            <Button fx:id="validerModifierExemplaire" layoutX="274.0" layoutY="307.0" mnemonicParsing="false" onAction="#validerModifierExemplaire" text="Valider" />
+            <Button fx:id="retourExemplaire" layoutX="37.0" layoutY="307.0" mnemonicParsing="false" onAction="#retourExemplaireOeuvre" text="Retour" />
+            <Label fx:id="labelModifierExemplaire" layoutX="276.0" layoutY="254.0">
+               <font>
+                  <Font size="15.0" />
                </font>
             </Label>
          </children>
