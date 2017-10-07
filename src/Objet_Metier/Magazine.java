@@ -1,9 +1,11 @@
 package Objet_Metier;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@DiscriminatorValue("MAGAZINE")
 public class Magazine extends Oeuvre {
 
 	private String numero;

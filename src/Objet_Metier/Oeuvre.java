@@ -1,10 +1,18 @@
 package Objet_Metier;
 
 import java.io.Serializable;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="DISCRIMINATOR")
+@DiscriminatorValue("OEUVRE")
 public class Oeuvre implements Serializable {
 
     @Id

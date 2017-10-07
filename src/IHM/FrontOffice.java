@@ -175,7 +175,7 @@ public class FrontOffice implements Initializable {
 		typeAjouterOeuvre.getItems().removeAll(typeAjouterOeuvre.getItems());
 		typeAjouterOeuvre.getItems().addAll("Livre", "Magazine");
 		typeAjouterOeuvre.getSelectionModel().select("Livre");
-		
+
 		typeSupprimerOeuvre.getItems().removeAll(typeSupprimerOeuvre.getItems());
 		typeSupprimerOeuvre.getItems().addAll("Livre", "Magazine");
 		typeSupprimerOeuvre.getSelectionModel().select("Livre");
@@ -382,12 +382,11 @@ public class FrontOffice implements Initializable {
 		em.close();
 		emf.close();
 	}
-	
+
 	@FXML
 	public void typeAjouterOeuvre(ActionEvent event) {
 		String choix = typeAjouterOeuvre.getSelectionModel().getSelectedItem();
-		switch (choix)
-		{
+		switch (choix) {
 		case "Livre":
 			textNumeroAjouterOeuvre.setVisible(false);
 			numeroAjouterOeuvre.setVisible(false);
@@ -409,10 +408,10 @@ public class FrontOffice implements Initializable {
 			break;
 		}
 	}
-	
+
 	@FXML
 	public void retourExemplaireOeuvre(ActionEvent event) {
-		//Field ajouter oeuvre
+		// Field ajouter oeuvre
 		textNumeroAjouterOeuvre.setVisible(false);
 		numeroAjouterOeuvre.setVisible(false);
 		numeroAjouterOeuvre.setText(null);
@@ -424,8 +423,16 @@ public class FrontOffice implements Initializable {
 		auteurAjouterOeuvre.setText(null);
 		editeurAjouterOeuvre.setText(null);
 		titreAjouterOeuvre.setText(null);
+		labelAjouterOeuvre.setText(null);
+		labelAjouterOeuvre.setTextFill(Color.BLACK);
 		typeAjouterOeuvre.getSelectionModel().select("Livre");
 		
+		//Field supprimer oeuvre
+		titreSupprimerOeuvre.setText(null);
+		labelSupprimerOeuvre.setText(null);
+		labelSupprimerOeuvre.setTextFill(Color.BLACK);
+
+		paneGererExemplaireOeuvre.toFront();
 	}
 
 	@FXML
@@ -434,17 +441,30 @@ public class FrontOffice implements Initializable {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		switch (choix)
-		{
+		switch (choix) {
 		case "Livre":
-			Livre newLivre = new Livre(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0, auteurAjouterOeuvre.getText());
+			Livre newLivre = new Livre(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0,
+					auteurAjouterOeuvre.getText());
 			em.persist(newLivre);
 			em.getTransaction().commit();
+			labelAjouterOeuvre.setText("Livre ajoute");
+			auteurAjouterOeuvre.setText(null);
+			editeurAjouterOeuvre.setText(null);
+			titreAjouterOeuvre.setText(null);
+			dateAjouterOeuvre.setText(null);
+			numeroAjouterOeuvre.setText(null);
 			break;
 		case "Magazine":
-			Magazine newMagazine = new Magazine(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0, numeroAjouterOeuvre.getText(), dateAjouterOeuvre.getText());
+			Magazine newMagazine = new Magazine(titreAjouterOeuvre.getText(), editeurAjouterOeuvre.getText(), 0,
+					numeroAjouterOeuvre.getText(), dateAjouterOeuvre.getText());
 			em.persist(newMagazine);
 			em.getTransaction().commit();
+			labelAjouterOeuvre.setText("Magazine ajoute");
+			auteurAjouterOeuvre.setText(null);
+			editeurAjouterOeuvre.setText(null);
+			titreAjouterOeuvre.setText(null);
+			dateAjouterOeuvre.setText(null);
+			numeroAjouterOeuvre.setText(null);
 			break;
 		}
 		em.close();
@@ -457,23 +477,32 @@ public class FrontOffice implements Initializable {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		switch (choix)
-		{
+		switch (choix) {
 		case "Livre":
-			Livre livre = em.find(Livre.class, titreSupprimerOeuvre.getText());
-			em.remove(livre);
-			em.getTransaction().commit();
-			labelSupprimerOeuvre.setText("Livre supprimer");
-			labelSupprimerOeuvre.setTextFill(Color.BLACK);
-			titreSupprimerOeuvre.setText(null);
+			try {
+				Livre livre = em.find(Livre.class, titreSupprimerOeuvre.getText());
+				em.remove(livre);
+				em.getTransaction().commit();
+				labelSupprimerOeuvre.setText("Livre supprimer");
+				labelSupprimerOeuvre.setTextFill(Color.BLACK);
+				titreSupprimerOeuvre.setText(null);
+			} catch (IllegalArgumentException e) {
+				labelSupprimerOeuvre.setText("Ce livre n'existe pas !");
+				labelSupprimerOeuvre.setTextFill(Color.RED);
+			}
 			break;
 		case "Magazine":
-			Magazine magazine = em.find(Magazine.class, titreSupprimerOeuvre.getText());
-			em.remove(magazine);
-			em.getTransaction().commit();
-			labelSupprimerOeuvre.setText("Magazine supprimer");
-			labelSupprimerOeuvre.setTextFill(Color.BLACK);
-			titreSupprimerOeuvre.setText(null);
+			try {
+				Magazine magazine = em.find(Magazine.class, titreSupprimerOeuvre.getText());
+				em.remove(magazine);
+				em.getTransaction().commit();
+				labelSupprimerOeuvre.setText("Magazine supprimer");
+				labelSupprimerOeuvre.setTextFill(Color.BLACK);
+				titreSupprimerOeuvre.setText(null);
+			} catch (IllegalArgumentException e) {
+				labelSupprimerOeuvre.setText("Ce magazine n'existe pas !");
+				labelSupprimerOeuvre.setTextFill(Color.RED);
+			}
 			break;
 		}
 		em.close();
