@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import Main.Main;
 import Objet_Metier.Exemplaire;
@@ -214,6 +216,18 @@ public class FrontOffice implements Initializable {
 	private Button validerReserverOeuvre;
 	@FXML
 	private Label labelReserverOeuvre;
+	@FXML
+	private Pane paneAnnulerReservation;
+	@FXML
+	private TextField usagerAnnulerReservation;
+	@FXML
+	private TextField titreAnnulerReservation;
+	@FXML
+	private Button validerAnnulerReservation;
+	@FXML
+	private Button retourAnnulerReservation;
+	@FXML
+	private Label labelAnnulerReservation;
 
 	public void setMain(Main main) {
 
@@ -304,6 +318,11 @@ public class FrontOffice implements Initializable {
 	@FXML
 	public void setFrontPaneReserverOeuvre(ActionEvent event) {
 		paneReserverOeuvre.toFront();
+	}
+	
+	@FXML
+	public void setFrontPaneAnnulerReservation(ActionEvent event) {
+		paneAnnulerReservation.toFront();
 	}
 
 	@FXML
@@ -721,6 +740,46 @@ public class FrontOffice implements Initializable {
 			em.getTransaction().commit();
 			labelReserverOeuvre.setText("Oeuvre emprunte");
 			labelReserverOeuvre.setTextFill(Color.BLACK);
+		}
+		em.close();
+		emf.close();
+	}
+	
+	@FXML
+	public void validerAnnulerReservation(ActionEvent event) {
+		Usager usager;
+		Oeuvre oeuvre;
+		Reservation reservation;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		reservation = null;
+		usager = em.find(Usager.class, usagerAnnulerReservation.getText());
+		oeuvre = em.find(Oeuvre.class, titreAnnulerReservation.getText());
+		if (usager == null || oeuvre == null) {
+			if (usager == null) {
+				labelAnnulerReservation.setText("L'usager n'existe pas !");
+				labelAnnulerReservation.setTextFill(Color.RED);
+			}
+			if (oeuvre == null) {
+				labelAnnulerReservation.setText("L'oeuvre n'existe pas !");
+				labelAnnulerReservation.setTextFill(Color.RED);
+			}
+		}
+		else {
+			Query requete = em.createQuery("SELECT r FROM Reservation r WHERE usager_nom=:nom AND oeuvre_titre=:titre");
+	        requete.setParameter( "nom", usager.getNom() );
+	        requete.setParameter( "titre", oeuvre.getTitre() );      
+	        try {
+	            reservation = (Reservation) requete.getSingleResult();
+	            em.remove(reservation);
+	            em.getTransaction().commit();
+	            labelAnnulerReservation.setText("Reservation annule");
+				labelAnnulerReservation.setTextFill(Color.BLACK);
+	        } catch ( NoResultException e ) {
+	        	labelAnnulerReservation.setText("La reservation n'existe pas !");
+				labelAnnulerReservation.setTextFill(Color.RED);
+	        }
 		}
 		em.close();
 		emf.close();

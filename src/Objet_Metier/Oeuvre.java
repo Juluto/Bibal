@@ -26,7 +26,31 @@ public class Oeuvre implements Serializable {
         this.nombreExemplaire = nombreExemplaire;
     }
     
-    public Oeuvre() {
+    public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public String getEditeur() {
+		return editeur;
+	}
+
+	public void setEditeur(String editeur) {
+		this.editeur = editeur;
+	}
+
+	public int getNombreExemplaire() {
+		return nombreExemplaire;
+	}
+
+	public void setNombreExemplaire(int nombreExemplaire) {
+		this.nombreExemplaire = nombreExemplaire;
+	}
+
+	public Oeuvre() {
         super();
     }
 
