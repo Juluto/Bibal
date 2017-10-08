@@ -1,6 +1,7 @@
 package IHM;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import Objet_Metier.Exemplaire;
 import Objet_Metier.Livre;
 import Objet_Metier.Magazine;
 import Objet_Metier.Oeuvre;
+import Objet_Metier.Reservation;
 import Objet_Metier.Usager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -200,6 +202,18 @@ public class FrontOffice implements Initializable {
 	private Button retourExemplaire;
 	@FXML
 	private Label labelModifierExemplaire;
+	@FXML
+	private Pane paneReserverOeuvre;
+	@FXML
+	private TextField titreReserverOeuvre;
+	@FXML
+	private TextField usagerReserverOeuvre;
+	@FXML
+	private Button retourReserverOeuvre;
+	@FXML
+	private Button validerReserverOeuvre;
+	@FXML
+	private Label labelReserverOeuvre;
 
 	public void setMain(Main main) {
 
@@ -221,7 +235,7 @@ public class FrontOffice implements Initializable {
 		typeSupprimerOeuvre.getItems().removeAll(typeSupprimerOeuvre.getItems());
 		typeSupprimerOeuvre.getItems().addAll("Livre", "Magazine");
 		typeSupprimerOeuvre.getSelectionModel().select("Livre");
-		
+
 		etatModifierExemplaire.getItems().removeAll(etatModifierExemplaire.getItems());
 		etatModifierExemplaire.getItems().addAll("Disponible", "Emprunte", "En restauration");
 		etatModifierExemplaire.getSelectionModel().select("Disponible");
@@ -271,7 +285,7 @@ public class FrontOffice implements Initializable {
 	private void setFrontPaneSupprimerOeuvre(ActionEvent event) {
 		paneSupprimerOeuvre.toFront();
 	}
-	
+
 	@FXML
 	public void setFrontPaneAjouterExemplaire(ActionEvent event) {
 		paneAjouterExemplaire.toFront();
@@ -285,6 +299,11 @@ public class FrontOffice implements Initializable {
 	@FXML
 	public void setFrontPaneModifierExemplaire(ActionEvent event) {
 		paneModifierExemplaire.toFront();
+	}
+	
+	@FXML
+	public void setFrontPaneReserverOeuvre(ActionEvent event) {
+		paneReserverOeuvre.toFront();
 	}
 
 	@FXML
@@ -492,26 +511,30 @@ public class FrontOffice implements Initializable {
 		titreSupprimerOeuvre.setText(null);
 		labelSupprimerOeuvre.setText(null);
 		labelSupprimerOeuvre.setTextFill(Color.BLACK);
-		
-		//Field ajouter exemplaire
+
+		// Field ajouter exemplaire
 		titreAjouterExemplaire.setText(null);
 		quantiteAjouterExemplaire.setText(null);
 		titreAjouterExemplaire.setDisable(false);
 		quantiteAjouterExemplaire.setDisable(true);
 		validerAjouterExemplaire.setDisable(true);
-		
-		//Field supprimer exemplaire
+
+		// Field supprimer exemplaire
 		numeroSupprimerExemplaire.setText(null);
 		labelSupprimerExemplaire.setText(null);
-		
-		//Field modifier exemplaire
+
+		// Field modifier exemplaire
 		numeroModifierExemplaire.setText(null);
 		labelModifierExemplaire.setText(null);
 		etatModifierExemplaire.getSelectionModel().select("Disponible");
 		labelModifierExemplaire.setTextFill(Color.BLACK);
-		
 
 		paneGererExemplaireOeuvre.toFront();
+	}
+
+	@FXML
+	public void retourEmpruntReservation(ActionEvent event) {
+		paneEmpruntReservation.toFront();
 	}
 
 	@FXML
@@ -587,7 +610,7 @@ public class FrontOffice implements Initializable {
 		em.close();
 		emf.close();
 	}
-	
+
 	@FXML
 	public void verifierAjouterExemplaire(ActionEvent event) {
 		Oeuvre oeuvre;
@@ -600,7 +623,7 @@ public class FrontOffice implements Initializable {
 			validerAjouterExemplaire.setDisable(false);
 			labelAjouterExemplaire.setText(null);
 			labelValiderAjouterExemplaire.setText(null);
-			
+
 		} else {
 			labelAjouterExemplaire.setText("Cet oeuvre n'existe pas !");
 			labelValiderAjouterExemplaire.setText(null);
@@ -622,7 +645,7 @@ public class FrontOffice implements Initializable {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
 		EntityManager em = emf.createEntityManager();
 		Oeuvre oeuvre = em.find(Oeuvre.class, titreAjouterExemplaire.getText());
-		for (int i=0; i < Integer.parseInt(quantiteAjouterExemplaire.getText()); i++) {
+		for (int i = 0; i < Integer.parseInt(quantiteAjouterExemplaire.getText()); i++) {
 			em.getTransaction().begin();
 			Exemplaire exemplaire = new Exemplaire(0, "Disponible", oeuvre);
 			em.persist(exemplaire);
@@ -632,7 +655,7 @@ public class FrontOffice implements Initializable {
 		emf.close();
 		labelValiderAjouterExemplaire.setText("Exemplaire ajoute");
 	}
-	
+
 	@FXML
 	public void validerSupprimerExemplaire(ActionEvent event) {
 		Exemplaire exemplaire;
@@ -653,7 +676,7 @@ public class FrontOffice implements Initializable {
 		em.close();
 		emf.close();
 	}
-	
+
 	@FXML
 	public void validerModifierExemplaire(ActionEvent event) {
 		Exemplaire exemplaire;
@@ -669,6 +692,35 @@ public class FrontOffice implements Initializable {
 		} catch (NullPointerException e) {
 			labelSupprimerExemplaire.setText("Cet exemplaire n'existe pas !");
 			labelSupprimerExemplaire.setTextFill(Color.RED);
+		}
+		em.close();
+		emf.close();
+	}
+
+	@FXML
+	public void validerReserverOeuvre(ActionEvent event) {
+		Usager usager;
+		Oeuvre oeuvre;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		usager = em.find(Usager.class, usagerReserverOeuvre.getText());
+		oeuvre = em.find(Oeuvre.class, titreReserverOeuvre.getText());
+		if (usager == null || oeuvre == null) {
+			if (usager == null) {
+				labelReserverOeuvre.setText("L'usager n'existe pas !");
+				labelReserverOeuvre.setTextFill(Color.RED);
+			}
+			if (oeuvre == null) {
+				labelReserverOeuvre.setText("L'oeuvre n'existe pas !");
+				labelReserverOeuvre.setTextFill(Color.RED);
+			}
+		} else {
+			Reservation reservation = new Reservation(usager, oeuvre, new Date());
+			em.persist(reservation);
+			em.getTransaction().commit();
+			labelReserverOeuvre.setText("Oeuvre emprunte");
+			labelReserverOeuvre.setTextFill(Color.BLACK);
 		}
 		em.close();
 		emf.close();
