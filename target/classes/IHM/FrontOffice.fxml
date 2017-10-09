@@ -308,6 +308,46 @@
             </Button>
          </children>
       </Pane>
+      <Pane fx:id="paneReserverOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="192.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Réserver Oeuvre">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="102.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre oeuvre" />
+            <TextField fx:id="titreReserverOeuvre" layoutX="220.0" layoutY="219.0" />
+            <Text layoutX="102.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usager" />
+            <TextField fx:id="usagerReserverOeuvre" layoutX="220.0" layoutY="151.0" />
+            <Button fx:id="retourReserverOeuvre" layoutX="38.0" layoutY="328.0" mnemonicParsing="false" onAction="#retourEmpruntReservation" text="Retour" />
+            <Button fx:id="validerReserverOeuvre" layoutX="275.0" layoutY="328.0" mnemonicParsing="false" onAction="#validerReserverOeuvre" text="Valider" />
+            <Label fx:id="labelReserverOeuvre" layoutX="381.0" layoutY="280.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneEmprunterExemplaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="151.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Emprunter Exemplaire" wrappingWidth="297.34374499320984">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="117.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom usager" />
+            <Text layoutX="117.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre oeuvre" />
+            <TextField fx:id="nomEmprunterExemplaire" layoutX="226.0" layoutY="147.0" />
+            <TextField fx:id="titreExmpunterExemplaire" layoutX="225.0" layoutY="188.0" />
+            <Button fx:id="retourEmprunterExemplaire" layoutX="40.0" layoutY="311.0" mnemonicParsing="false" onAction="#retourEmpruntReservation" text="Retour" />
+            <Button fx:id="validerEmprunterExemplaire" layoutX="274.0" layoutY="311.0" mnemonicParsing="false" onAction="#validerEmprunterExemplaire" text="Valider" />
+            <Label fx:id="labelEmprunterExemplaire" layoutX="165.0" layoutY="265.0" text="Label">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane fx:id="paneEmpruntReservation" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
             <Label layoutX="103.0" layoutY="35.0" text="Gérer emprunts &amp; réservation" underline="true">
@@ -330,7 +370,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="emprunterExemplaire" layoutX="334.0" layoutY="140.0" mnemonicParsing="false" text="Emprunter exemplaire">
+            <Button fx:id="emprunterExemplaire" layoutX="334.0" layoutY="140.0" mnemonicParsing="false" onAction="#setFrontPaneEmprunterExemplaire" text="Emprunter exemplaire">
                <font>
                   <Font size="18.0" />
                </font>
@@ -340,26 +380,6 @@
                   <Font size="18.0" />
                </font>
             </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="paneReserverOeuvre" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
-         <children>
-            <Text layoutX="192.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Réserver Oeuvre">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Text layoutX="102.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titre oeuvre" />
-            <TextField fx:id="titreReserverOeuvre" layoutX="220.0" layoutY="219.0" />
-            <Text layoutX="102.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usager" />
-            <TextField fx:id="usagerReserverOeuvre" layoutX="220.0" layoutY="151.0" />
-            <Button fx:id="retourReserverOeuvre" layoutX="38.0" layoutY="328.0" mnemonicParsing="false" onAction="#retourEmpruntReservation" text="Retour" />
-            <Button fx:id="validerReserverOeuvre" layoutX="275.0" layoutY="328.0" mnemonicParsing="false" onAction="#validerReserverOeuvre" text="Valider" />
-            <Label fx:id="labelReserverOeuvre" layoutX="381.0" layoutY="280.0">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
    </children>
