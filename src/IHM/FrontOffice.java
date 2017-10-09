@@ -207,15 +207,27 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private Label labelReserverOeuvre;
 	@FXML
-	private Pane paneAnnulerReservation;
+	private Pane paneEmprunterExemplaire;
 	@FXML
-	private TextField usagerAnnulerReservation;
+	private TextField nomEmprunterExemplaire;
+	@FXML
+	private TextField titreExmpunterExemplaire;
+	@FXML
+	private Button retourEmprunterExemplaire;
+	@FXML
+	private Button validerEmprunterExemplaire;
+	@FXML
+	private Label labelEmprunterExemplaire;
+	@FXML
+	private Pane paneAnnulerReservation;
 	@FXML
 	private TextField titreAnnulerReservation;
 	@FXML
-	private Button validerAnnulerReservation;
+	private TextField usagerAnnulerReservation;
 	@FXML
 	private Button retourAnnulerReservation;
+	@FXML
+	private Button validerAnnulerReservation;
 	@FXML
 	private Label labelAnnulerReservation;
 	@FXML
@@ -231,17 +243,17 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private Button rendreExemplaire;
 	@FXML
-	private Pane paneEmprunterExemplaire;
+	private Pane paneRendreExemplaire;
 	@FXML
-	private TextField nomEmprunterExemplaire;
+	private TextField nomRendreExemplaire;
 	@FXML
-	private TextField titreExmpunterExemplaire;
+	private TextField idRendreExemplaire;
 	@FXML
-	private Button retourEmprunterExemplaire;
+	private Button retourRendreExemplaire;
 	@FXML
-	private Button validerEmprunterExemplaire;
+	private Button validerRendreExemplaire;
 	@FXML
-	private Label labelEmprunterExemplaire;
+	private Label labelRendreExemplaire;
 
 	public void setMain(Main main) {
 
@@ -333,7 +345,7 @@ public class FrontOffice implements Initializable {
 	public void setFrontPaneReserverOeuvre(ActionEvent event) {
 		paneReserverOeuvre.toFront();
 	}
-	
+
 	@FXML
 	public void setFrontPaneAnnulerReservation(ActionEvent event) {
 		paneAnnulerReservation.toFront();
@@ -342,6 +354,11 @@ public class FrontOffice implements Initializable {
 	@FXML
 	public void setFrontPaneEmprunterExemplaire(ActionEvent event) {
 		paneEmprunterExemplaire.toFront();
+	}
+	
+	@FXML
+	public void setFrontPaneRendreExemplaire(ActionEvent event) {
+		paneRendreExemplaire.toFront();
 	}
 
 	@FXML
@@ -572,18 +589,30 @@ public class FrontOffice implements Initializable {
 
 	@FXML
 	public void retourEmpruntReservation(ActionEvent event) {
-		//Field reserver oeuvre
+		// Field reserver oeuvre
 		usagerReserverOeuvre.setText(null);
 		titreReserverOeuvre.setText(null);
 		labelReserverOeuvre.setText(null);
 		labelReserverOeuvre.setTextFill(Color.BLACK);
-		
-		//Field emprunter exemplaire
+
+		// Field emprunter exemplaire
 		nomEmprunterExemplaire.setText(null);
 		titreExmpunterExemplaire.setText(null);
 		labelEmprunterExemplaire.setText(null);
 		labelEmprunterExemplaire.setTextFill(Color.BLACK);
 		
+		//Field annuler reservation
+		titreAnnulerReservation.setText(null);
+		usagerAnnulerReservation.setText(null);
+		labelAnnulerReservation.setText(null);
+		labelAnnulerReservation.setTextFill(Color.BLACK);
+		
+		//Field rendre exemplaire
+		nomRendreExemplaire.setText(null);
+		idRendreExemplaire.setText(null);
+		labelRendreExemplaire.setText(null);
+		labelRendreExemplaire.setTextFill(Color.BLACK);
+
 		paneEmpruntReservation.toFront();
 	}
 
@@ -775,7 +804,7 @@ public class FrontOffice implements Initializable {
 		em.close();
 		emf.close();
 	}
-	
+
 	@FXML
 	public void validerAnnulerReservation(ActionEvent event) {
 		Usager usager;
@@ -796,21 +825,20 @@ public class FrontOffice implements Initializable {
 				labelAnnulerReservation.setText("L'oeuvre n'existe pas !");
 				labelAnnulerReservation.setTextFill(Color.RED);
 			}
-		}
-		else {
+		} else {
 			Query requete = em.createQuery("SELECT r FROM Reservation r WHERE usager_nom=:nom AND oeuvre_titre=:titre");
-	        requete.setParameter( "nom", usager.getNom() );
-	        requete.setParameter( "titre", oeuvre.getTitre() );      
-	        try {
-	            reservation = (Reservation) requete.getSingleResult();
-	            em.remove(reservation);
-	            em.getTransaction().commit();
-	            labelAnnulerReservation.setText("Reservation annule");
+			requete.setParameter("nom", usager.getNom());
+			requete.setParameter("titre", oeuvre.getTitre());
+			try {
+				reservation = (Reservation) requete.getSingleResult();
+				em.remove(reservation);
+				em.getTransaction().commit();
+				labelAnnulerReservation.setText("Reservation annule");
 				labelAnnulerReservation.setTextFill(Color.BLACK);
-	        } catch ( NoResultException e ) {
-	        	labelAnnulerReservation.setText("La reservation n'existe pas !");
+			} catch (NoResultException e) {
+				labelAnnulerReservation.setText("La reservation n'existe pas !");
 				labelAnnulerReservation.setTextFill(Color.RED);
-	        }
+			}
 		}
 		em.close();
 		emf.close();
@@ -868,6 +896,47 @@ public class FrontOffice implements Initializable {
 		}
 		em.close();
 		emf.close();
+	}
+
+	@FXML
+	public void validerRendreExemplaire(ActionEvent event) {
+		Emprunt emprunt;
+		Usager usager;
+		Exemplaire exemplaire;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		usager = em.find(Usager.class, nomRendreExemplaire.getText());
+		exemplaire = em.find(Exemplaire.class, Integer.parseInt(idRendreExemplaire.getText()));
+		if (usager == null || exemplaire == null) {
+			if (usager == null) {
+				labelRendreExemplaire.setText("L'usager n'existe pas !");
+				labelRendreExemplaire.setTextFill(Color.RED);
+			}
+			if (exemplaire == null) {
+				labelRendreExemplaire.setText("L'exemplaire n'existe pas !");
+				labelRendreExemplaire.setTextFill(Color.RED);
+			}
+		} else {
+			Query requete = em
+					.createQuery("SELECT e FROM Emprunt e WHERE usager_nom=:nom AND exemplaire_id=:exemplaire");
+			requete.setParameter("nom", usager.getNom());
+			requete.setParameter("exemplaire", exemplaire.getId());
+			try {
+				em.getTransaction().begin();
+				emprunt = (Emprunt) requete.getSingleResult();
+				em.remove(emprunt);
+				em.getTransaction().commit();
+			} catch (NoResultException e) {
+				labelRendreExemplaire.setText("Cet emprunt n'existe pas !");
+				labelRendreExemplaire.setTextFill(Color.BLACK);
+			}
+			em.getTransaction().begin();
+			exemplaire = em.find(Exemplaire.class, Integer.parseInt(idRendreExemplaire.getText()));
+			exemplaire.setEtat("Disponible");
+			em.getTransaction().commit();
+			labelRendreExemplaire.setText("L'exemplaire a été rendu.");
+			labelRendreExemplaire.setTextFill(Color.BLACK);
+		}
 	}
 
 	/**
