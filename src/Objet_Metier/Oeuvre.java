@@ -10,23 +10,27 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="DISCRIMINATOR")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DISCRIMINATOR")
 @DiscriminatorValue("OEUVRE")
 public class Oeuvre implements Serializable {
 
-    @Id
-    private String titre;
-    private String editeur;
-    private int nombreExemplaire;
+	@Id
+	private String titre;
+	private String editeur;
+	private int nombreExemplaire;
 
-    public Oeuvre(String titre, String editeur, int nombreExemplaire) {
-        this.titre = titre;
-        this.editeur = editeur;
-        this.nombreExemplaire = nombreExemplaire;
-    }
-    
-    public String getTitre() {
+	public Oeuvre(String titre, String editeur, int nombreExemplaire) {
+		this.titre = titre;
+		this.editeur = editeur;
+		this.nombreExemplaire = nombreExemplaire;
+	}
+
+	public Oeuvre() {
+		super();
+	}
+
+	public String getTitre() {
 		return titre;
 	}
 
@@ -50,17 +54,13 @@ public class Oeuvre implements Serializable {
 		this.nombreExemplaire = nombreExemplaire;
 	}
 
-	public Oeuvre() {
-        super();
-    }
-
-    /**
-     *
-     * @param titre
-     */
-    public Oeuvre e_identification(String titre) {
-        // TODO - implement Oeuvre.e_identification
-        throw new UnsupportedOperationException();
-    }
+	/**
+	 *
+	 * @param titre
+	 */
+	public Oeuvre e_identification(String titre) {
+		// TODO - implement Oeuvre.e_identification
+		throw new UnsupportedOperationException();
+	}
 
 }

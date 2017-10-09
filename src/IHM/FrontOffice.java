@@ -2,6 +2,7 @@ package IHM;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import Main.Main;
+import Objet_Metier.Emprunt;
 import Objet_Metier.Exemplaire;
 import Objet_Metier.Livre;
 import Objet_Metier.Magazine;
@@ -91,18 +93,6 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private Button retourModifierUsager;
 	@FXML
-	private Pane paneEmpruntReservation;
-	@FXML
-	private Button retourEmpruntReservation;
-	@FXML
-	private Button reserverOeuvre;
-	@FXML
-	private Button annulerReservation;
-	@FXML
-	private Button emprunterExemplaire;
-	@FXML
-	private Button rendreExemplaire;
-	@FXML
 	private Pane paneMenu;
 	@FXML
 	private Button gestionUsager;
@@ -179,6 +169,18 @@ public class FrontOffice implements Initializable {
 	@FXML
 	private Label labelSupprimerExemplaire;
 	@FXML
+	private Pane paneModifierExemplaire;
+	@FXML
+	private TextField numeroModifierExemplaire;
+	@FXML
+	private ComboBox<String> etatModifierExemplaire;
+	@FXML
+	private Button validerModifierExemplaire;
+	@FXML
+	private Button retourExemplaire;
+	@FXML
+	private Label labelModifierExemplaire;
+	@FXML
 	private Pane paneGererExemplaireOeuvre;
 	@FXML
 	private Button ajouterExemplaire;
@@ -192,18 +194,6 @@ public class FrontOffice implements Initializable {
 	private Button supprimerOeuvre;
 	@FXML
 	private Button retourExemplaireOeuvre;
-	@FXML
-	private Pane paneModifierExemplaire;
-	@FXML
-	private TextField numeroModifierExemplaire;
-	@FXML
-	private ComboBox<String> etatModifierExemplaire;
-	@FXML
-	private Button validerModifierExemplaire;
-	@FXML
-	private Button retourExemplaire;
-	@FXML
-	private Label labelModifierExemplaire;
 	@FXML
 	private Pane paneReserverOeuvre;
 	@FXML
@@ -228,6 +218,30 @@ public class FrontOffice implements Initializable {
 	private Button retourAnnulerReservation;
 	@FXML
 	private Label labelAnnulerReservation;
+	@FXML
+	private Pane paneEmpruntReservation;
+	@FXML
+	private Button retourEmpruntReservation;
+	@FXML
+	private Button reserverOeuvre;
+	@FXML
+	private Button annulerReservation;
+	@FXML
+	private Button emprunterExemplaire;
+	@FXML
+	private Button rendreExemplaire;
+	@FXML
+	private Pane paneEmprunterExemplaire;
+	@FXML
+	private TextField nomEmprunterExemplaire;
+	@FXML
+	private TextField titreExmpunterExemplaire;
+	@FXML
+	private Button retourEmprunterExemplaire;
+	@FXML
+	private Button validerEmprunterExemplaire;
+	@FXML
+	private Label labelEmprunterExemplaire;
 
 	public void setMain(Main main) {
 
@@ -314,7 +328,7 @@ public class FrontOffice implements Initializable {
 	public void setFrontPaneModifierExemplaire(ActionEvent event) {
 		paneModifierExemplaire.toFront();
 	}
-	
+
 	@FXML
 	public void setFrontPaneReserverOeuvre(ActionEvent event) {
 		paneReserverOeuvre.toFront();
@@ -323,6 +337,11 @@ public class FrontOffice implements Initializable {
 	@FXML
 	public void setFrontPaneAnnulerReservation(ActionEvent event) {
 		paneAnnulerReservation.toFront();
+	}
+
+	@FXML
+	public void setFrontPaneEmprunterExemplaire(ActionEvent event) {
+		paneEmprunterExemplaire.toFront();
 	}
 
 	@FXML
@@ -553,6 +572,18 @@ public class FrontOffice implements Initializable {
 
 	@FXML
 	public void retourEmpruntReservation(ActionEvent event) {
+		//Field reserver oeuvre
+		usagerReserverOeuvre.setText(null);
+		titreReserverOeuvre.setText(null);
+		labelReserverOeuvre.setText(null);
+		labelReserverOeuvre.setTextFill(Color.BLACK);
+		
+		//Field emprunter exemplaire
+		nomEmprunterExemplaire.setText(null);
+		titreExmpunterExemplaire.setText(null);
+		labelEmprunterExemplaire.setText(null);
+		labelEmprunterExemplaire.setTextFill(Color.BLACK);
+		
 		paneEmpruntReservation.toFront();
 	}
 
@@ -780,6 +811,60 @@ public class FrontOffice implements Initializable {
 	        	labelAnnulerReservation.setText("La reservation n'existe pas !");
 				labelAnnulerReservation.setTextFill(Color.RED);
 	        }
+		}
+		em.close();
+		emf.close();
+	}
+
+	@FXML
+	public void validerEmprunterExemplaire(ActionEvent event) {
+		Oeuvre oeuvre;
+		Usager usager;
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		usager = em.find(Usager.class, nomEmprunterExemplaire.getText());
+		oeuvre = em.find(Oeuvre.class, titreExmpunterExemplaire.getText());
+		if (usager == null || oeuvre == null) {
+			if (usager == null) {
+				labelEmprunterExemplaire.setText("L'usager n'existe pas !");
+				labelEmprunterExemplaire.setTextFill(Color.RED);
+			}
+			if (oeuvre == null) {
+				labelEmprunterExemplaire.setText("L'oeuvre n'existe pas !");
+				labelEmprunterExemplaire.setTextFill(Color.RED);
+			}
+		} else {
+			List<Exemplaire> listExemplaire;
+			Query requeteEmprunt = em
+					.createQuery("SELECT e FROM Exemplaire e WHERE etat = 'Disponible' AND oeuvre_titre=:titre");
+			requeteEmprunt.setParameter("titre", titreExmpunterExemplaire.getText());
+			try {
+				listExemplaire = (List<Exemplaire>) requeteEmprunt.getResultList();
+				Exemplaire exemplaire;
+				exemplaire = listExemplaire.get(0);
+				exemplaire.setEtat("Emprunte");
+				em.getTransaction().commit();
+				em.getTransaction().begin();
+				Emprunt emprunt = new Emprunt(oeuvre, usager, exemplaire, new Date());
+				em.persist(emprunt);
+				em.getTransaction().commit();
+				labelEmprunterExemplaire.setText("Emprunt effectue");
+				Reservation reservation;
+				Query requeteReservation = em
+						.createQuery("SELECT r FROM Reservation r WHERE usager_nom=:nom AND oeuvre_titre=:titre");
+				requeteReservation.setParameter("nom", usager.getNom());
+				requeteReservation.setParameter("titre", oeuvre.getTitre());
+				try {
+					em.getTransaction().begin();
+					reservation = (Reservation) requeteReservation.getSingleResult();
+					em.remove(reservation);
+					em.getTransaction().commit();
+				} catch (NoResultException e) {
+				}
+			} catch (IndexOutOfBoundsException e) {
+				labelEmprunterExemplaire.setText("Il n'y a plus d'exemplaire disponible. Veuillez en reserver un.");
+			}
 		}
 		em.close();
 		emf.close();
