@@ -1,12 +1,17 @@
 package Objet_Metier;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 @Entity
 public class Exemplaire implements Serializable {
@@ -55,23 +60,38 @@ public class Exemplaire implements Serializable {
 		this.oeuvre = oeuvre;
 	}
 
-	public void mettreAJour() {
-        // TODO - implement Exemplaire.mettreAJour
-        throw new UnsupportedOperationException();
-    }
+	public static Exemplaire identifierExemplaireDisponible(String titreOeuvre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Query requeteEmprunt = em
+				.createQuery("SELECT e FROM Exemplaire e WHERE etat = 'Disponible' AND oeuvre_titre=:titre");
+		requeteEmprunt.setParameter("titre", titreOeuvre);
+		try{
+			List<Exemplaire> listExemplaire = (List<Exemplaire>) requeteEmprunt.getResultList();
+			return listExemplaire.get(0);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
 
-    public void rechercher() {
-        // TODO - implement Exemplaire.rechercher
-        throw new UnsupportedOperationException();
-    }
+	public static Exemplaire identifier(int id) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		return em.find(Exemplaire.class, id);
+	}
 
-    /**
-     *
-     * @param o
-     */
-    public Exemplaire e_identification(Oeuvre o) {
-        // TODO - implement Exemplaire.e_identification
-        throw new UnsupportedOperationException();
-    }
+	public static Exemplaire oeuvreExemplaire(String titreOeuvre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Query requeteEmprunt = em
+				.createQuery("SELECT e FROM Exemplaire e WHERE oeuvre_titre=:titre");
+		requeteEmprunt.setParameter("titre", titreOeuvre);
+		try{
+			List<Exemplaire> listExemplaire = (List<Exemplaire>) requeteEmprunt.getResultList();
+			return listExemplaire.get(0);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
 
 }

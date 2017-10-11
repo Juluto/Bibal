@@ -5,9 +5,12 @@ import java.io.Serializable;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Persistence;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -54,13 +57,29 @@ public class Oeuvre implements Serializable {
 		this.nombreExemplaire = nombreExemplaire;
 	}
 
-	/**
-	 *
-	 * @param titre
-	 */
-	public Oeuvre e_identification(String titre) {
-		// TODO - implement Oeuvre.e_identification
-		throw new UnsupportedOperationException();
+
+	public static Oeuvre identifier(String titre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		return em.find(Oeuvre.class, titre);
+	}
+
+	public static void ajouterNombreExemplaire(Oeuvre oeuvre, int quantite) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		oeuvre = em.find(Oeuvre.class, oeuvre.getTitre());
+		oeuvre.setNombreExemplaire(oeuvre.getNombreExemplaire() + quantite);
+		em.getTransaction().commit();
+	}
+
+	public static void retirerNombreExemplaire(Oeuvre oeuvre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		oeuvre = em.find(Oeuvre.class, oeuvre.getTitre());
+		oeuvre.setNombreExemplaire(oeuvre.getNombreExemplaire() - 1);
+		em.getTransaction().commit();
 	}
 
 }

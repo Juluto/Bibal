@@ -3,7 +3,10 @@ package Objet_Metier;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
+import javax.persistence.Persistence;
 
 @Entity
 public class Usager implements Serializable {
@@ -71,7 +74,9 @@ public class Usager implements Serializable {
         throw new UnsupportedOperationException();
     }
 
-    public Usager e_identification(String nom) {
-        throw new UnsupportedOperationException();
-    }
+	public static Usager identifier(String nom) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		return em.find(Usager.class, nom);
+	}
 }

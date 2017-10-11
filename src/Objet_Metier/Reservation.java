@@ -4,10 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -82,6 +87,46 @@ public class Reservation implements Serializable {
 	public Reservation annuler(Reservation r) {
 		// TODO - implement Reservation.annuler
 		throw new UnsupportedOperationException();
+	}
+
+	public static Reservation identifier(String nomUsager, String titreOeuvre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Query requeteReservation = em
+				.createQuery("SELECT r FROM Reservation r WHERE usager_nom=:nom AND oeuvre_titre=:titre");
+		requeteReservation.setParameter("nom", nomUsager);
+		requeteReservation.setParameter("titre", titreOeuvre);
+		try{
+			return (Reservation) requeteReservation.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	public static Reservation usagerReserver(String nomUsager) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Query requete = em
+				.createQuery("SELECT r FROM Reservation r WHERE usager_nom=:nom");
+		requete.setParameter("nom", nomUsager);
+		try {
+			return (Reservation) requete.getResultList().get(0);
+		} catch (IndexOutOfBoundsException e){
+			return null;
+		}
+	}
+
+	public static Reservation oeuvreReserver(String titreOeuvre) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
+		EntityManager em = emf.createEntityManager();
+		Query requete = em
+				.createQuery("SELECT r FROM Reservation r WHERE oeuvre_titre=:oeuvre_titre");
+		requete.setParameter("oeuvre_titre", titreOeuvre);
+		try {
+			return (Reservation) requete.getResultList().get(0);
+		} catch (IndexOutOfBoundsException e){
+			return null;
+		}
 	}
 
 }
