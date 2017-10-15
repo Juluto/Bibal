@@ -70,25 +70,6 @@ public class Reservation implements Serializable {
 		this.usager = usager;
 	}
 
-	/**
-	 *
-	 * @param o
-	 * @param u
-	 */
-	public Reservation e_identification(Oeuvre o, Usager u) {
-		// TODO - implement Reservation.e_identification
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 *
-	 * @param r
-	 */
-	public Reservation annuler(Reservation r) {
-		// TODO - implement Reservation.annuler
-		throw new UnsupportedOperationException();
-	}
-
 	public static Reservation identifier(String nomUsager, String titreOeuvre) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
 		EntityManager em = emf.createEntityManager();

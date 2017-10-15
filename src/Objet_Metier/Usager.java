@@ -70,10 +70,6 @@ public class Usager implements Serializable {
         this.adresse = adresse;
     }
 
-    public void mettreAJour() {
-        throw new UnsupportedOperationException();
-    }
-
 	public static Usager identifier(String nom) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("BIBAL");
 		EntityManager em = emf.createEntityManager();
